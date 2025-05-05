@@ -7,7 +7,7 @@ namespace Assets.Scripts.Clock
 {
   public class ClockView : MonoBehaviour
   {
-    [SerializeField] private TMP_Text timeText;
+    [SerializeField] private TextMeshProUGUI timeText;
     private ClockModel model;
 
     public void Initialize(ClockModel model)
