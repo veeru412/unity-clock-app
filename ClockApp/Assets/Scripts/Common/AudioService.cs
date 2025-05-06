@@ -17,7 +17,7 @@ namespace Assets.Scripts.Common
       }
     }
 
-    private AudioClip? GetAudio(string id)
+    private AudioClip GetAudio(string id)
     {
       var taskCompleted = audioClipCache.TryGetValue(id, out var clip);
       if (taskCompleted)

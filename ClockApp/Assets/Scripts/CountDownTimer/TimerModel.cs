@@ -23,11 +23,35 @@ namespace Assets.Scripts.CountDownTimer
 
       Observable.EveryUpdate()
           .Where(_ => State.Value == TimerState.Running)
-          .Subscribe(_ => {
-            RemainingSeconds.Value -= Time.deltaTime;
-            if (RemainingSeconds.Value <= 0f) FinishTimer();
-          })
+          .Subscribe(UpdateUI)
           .AddTo(disposables);
+    }
+
+    public void ResetTimer()
+    {
+      State.Value = TimerState.Stopped;
+      RemainingSeconds.Value = initialDuration;
+    }
+
+    public void SetDuration(float seconds)
+    {
+      RemainingSeconds.Value = seconds;
+      initialDuration = seconds;
+    }
+
+    public void Start() => State.Value = TimerState.Running;
+
+    public void Pause() => State.Value = TimerState.Paused;
+
+    public void Dispose() => disposables?.Dispose();
+
+    private void UpdateUI(long obj)
+    {
+      RemainingSeconds.Value -= Time.deltaTime;
+      if (RemainingSeconds.Value <= 0f)
+      { 
+        FinishTimer();
+      }
     }
 
     private void FinishTimer()
@@ -37,19 +61,5 @@ namespace Assets.Scripts.CountDownTimer
       TimerFinished.Execute();
       audioService.PlaySound(finishTimerClip);
     }
-
-    public void ResetTimer()
-    {
-      State.Value = TimerState.Stopped;
-      RemainingSeconds.Value = initialDuration;
-    }
-    public void SetDuration(float seconds) 
-    { 
-      RemainingSeconds.Value = seconds;
-      initialDuration= seconds;
-    }
-    public void Start() => State.Value = TimerState.Running;
-    public void Pause() => State.Value = TimerState.Paused;
-    public void Dispose() => disposables?.Dispose();
   }
 }
