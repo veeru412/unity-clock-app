@@ -16,6 +16,12 @@ namespace Assets.Scripts.Clock
           .AddTo(disposables);
     }
 
+    /*// Only for UT
+    protected ClockModel(IObservable<long> timerObservable, Func<DateTime> timeProvider)
+    {
+      timerObservable.Subscribe(_ => CurrentTime.Value = timeProvider());
+    }*/
+
     public void Dispose() => disposables.Dispose();
 
     private void UpdateUI(long obj) => CurrentTime.Value = DateTime.Now;

@@ -27,6 +27,15 @@ namespace Assets.Scripts.CountDownTimer
           .AddTo(disposables);
     }
 
+    /*// Only for UT
+    protected TimerModel(IAudioService audioService, IObservable<long> updateObservable)
+    {
+      this.audioService = audioService;
+      updateObservable
+          .Subscribe(UpdateUI)
+          .AddTo(disposables);
+    }*/
+
     public void ResetTimer()
     {
       State.Value = TimerState.Stopped;
@@ -48,7 +57,7 @@ namespace Assets.Scripts.CountDownTimer
     private void UpdateUI(long obj)
     {
       RemainingSeconds.Value -= Time.deltaTime;
-      if (RemainingSeconds.Value <= 0f)
+      if ((int)RemainingSeconds.Value <= 0f)
       { 
         FinishTimer();
       }
