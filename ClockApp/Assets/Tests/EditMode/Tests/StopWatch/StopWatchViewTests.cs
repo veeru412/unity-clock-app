@@ -21,8 +21,7 @@ namespace Assets.Tests.EditMode.StopWatch
     private Button resetButton;
     private Button recordButton;
 
-    private Subject<long> timerSubject;
-    private TimeSpan expectedTime = new TimeSpan(10);
+    private Subject<TimeSpan> timerSubject;
 
     [SetUp]
     public void SetUp() {
@@ -41,8 +40,8 @@ namespace Assets.Tests.EditMode.StopWatch
       SetPrivateField(view, "recordButton", recordButton);
       SetPrivateField(view, "onOffToggleLabel", onOffToggleLabel);
 
-      timerSubject = new Subject<long>();
-      model = new StopWatchModel(timerSubject, () => expectedTime);
+      timerSubject = new Subject<TimeSpan>();
+      model = new StopWatchModel(timerSubject);
 
       view.Construct(model);
     }
@@ -50,14 +49,19 @@ namespace Assets.Tests.EditMode.StopWatch
     [Test]
     public void ElapsedTimeUpdateTest()
     {
-      timerSubject.OnNext(0); 
-      Assert.AreEqual("00:10.00", displayText.text);
+      //arrange
+      var observeTime = TimeSpan.FromSeconds(10);
+      var expectedTime = observeTime.ToString(@"mm\:ss\.ff");
+      //act
+      timerSubject.OnNext(observeTime); 
+      //assert
+      Assert.AreEqual(expectedTime, displayText.text);
     }
 
     [Test]
     public void LappedTimeUpdateTest()
     {
-      model.ElapsedTime.Value = expectedTime;
+      model.ElapsedTime.Value = TimeSpan.FromSeconds(10);
       model.Record(); 
       Assert.AreEqual("00:10.00", lappedTimeText.text);
     }

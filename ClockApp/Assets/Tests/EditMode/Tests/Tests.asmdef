@@ -4,9 +4,9 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "UniRx",
         "Unity.TextMeshPro",
-        "clockapp"
+        "clockapp",
+        "UniRx"
     ],
     "includePlatforms": [
         "Editor"
@@ -16,8 +16,7 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "nunit.framework.dll",
-        "Moq.dll",
-        "Castle.Core.dll"
+        "Moq.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

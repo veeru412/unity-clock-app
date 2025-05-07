@@ -16,6 +16,13 @@ namespace Assets.Scripts.CountDownTimer
 
     private TimerModel model;
 
+    /// <summary>
+    /// this function is only E2E. just make test runs quicker we are overiding the duration.
+    /// so that test can execute quickly.
+    /// </summary>
+    /// <param name="duration"></param>
+    public void SetDuration(float duration) => model.SetDuration(duration);
+
     [Inject]
     public void Construct(TimerModel model)
     {

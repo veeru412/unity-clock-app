@@ -23,10 +23,8 @@ namespace Assets.Scripts.StopWatch
     }
 
     // Only for UT
-    public StopWatchModel(IObservable<long> timerObservable, Func<TimeSpan> timeProvider)
-    {
-      timerObservable.Subscribe(_ => ElapsedTime.Value = timeProvider());
-    }
+    public StopWatchModel(IObservable<TimeSpan> timerObservable) => 
+      timerObservable.Subscribe(time => ElapsedTime.Value = time);
 
     public void Record() =>
       LappedTime.Value = ElapsedTime.Value;

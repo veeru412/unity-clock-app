@@ -9,27 +9,25 @@ namespace Assets.Tests.EditMode.StopWatch
   public class StopWatchModelTests
   {
     private StopWatchModel model;
-    private Subject<long> timerSubject;
-    private TimeSpan expectedTime = new TimeSpan(10);
+    private Subject<TimeSpan> timerSubject;
 
     [SetUp]
     public void Setup()
     {
-      timerSubject = new Subject<long>();
-      model = new StopWatchModel(timerSubject, () => expectedTime);
+      timerSubject = new Subject<TimeSpan>();
+      model = new StopWatchModel(timerSubject);
     }
 
     [Test]
     public void TimerUpdateTest()
     {
-      TimeSpan observedTime = default;
-      model.ElapsedTime.Subscribe(t => observedTime = t);
+      TimeSpan observedTime = TimeSpan.FromSeconds(10);
 
       // Act
-      timerSubject.OnNext(0);
+      timerSubject.OnNext(observedTime);
 
       // Assert
-      Assert.AreEqual(expectedTime, observedTime);
+      Assert.AreEqual(observedTime, model.ElapsedTime.Value);
     }
 
     [Test]
