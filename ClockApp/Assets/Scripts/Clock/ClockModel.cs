@@ -1,5 +1,6 @@
 using UniRx;
 using System;
+using VContainer;
 
 namespace Assets.Scripts.Clock
 {
@@ -9,6 +10,7 @@ namespace Assets.Scripts.Clock
 
     private CompositeDisposable disposables = new CompositeDisposable();
 
+    [Inject]
     public ClockModel()
     {
       Observable.Interval(TimeSpan.FromSeconds(1))
@@ -16,11 +18,11 @@ namespace Assets.Scripts.Clock
           .AddTo(disposables);
     }
 
-    /*// Only for UT
-    protected ClockModel(IObservable<long> timerObservable, Func<DateTime> timeProvider)
+    // Only for UT
+    public ClockModel(IObservable<long> timerObservable, Func<DateTime> timeProvider)
     {
       timerObservable.Subscribe(_ => CurrentTime.Value = timeProvider());
-    }*/
+    }
 
     public void Dispose() => disposables.Dispose();
 

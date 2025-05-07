@@ -12,7 +12,7 @@ namespace Assets.Tests.EditMode.Clock
     {
       var testTimer = new Subject<long>();
       var expectedTime = new DateTime(2025, 1, 1, 9, 30, 0);
-      var model = new ClockModelExtention(testTimer, () => expectedTime);
+      var model = new ClockModel(testTimer, () => expectedTime);
 
       DateTime observedTime = default;
       model.CurrentTime.Subscribe(t => observedTime = t);
@@ -23,11 +23,6 @@ namespace Assets.Tests.EditMode.Clock
       // Assert
       Assert.AreEqual(expectedTime, observedTime);
     }
-  }
-
-  public class ClockModelExtention : ClockModel
-  {
-    public ClockModelExtention(IObservable<long> timerObservable, Func<DateTime> timeProvider) { }
   }
 }
 

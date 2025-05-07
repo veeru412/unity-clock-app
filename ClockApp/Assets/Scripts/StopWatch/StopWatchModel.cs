@@ -2,6 +2,7 @@
 using UniRx;
 using UnityEngine;
 using Assets.Scripts.Enum;
+using VContainer;
 
 namespace Assets.Scripts.StopWatch
 {
@@ -12,12 +13,19 @@ namespace Assets.Scripts.StopWatch
     public ReactiveProperty<TimeSpan> LappedTime { get; } = new();
 
     private CompositeDisposable disposables = new();
-    
+
+    [Inject]
     public StopWatchModel() {
       Observable.EveryUpdate()
         .Where(_ => State.Value == TimerState.Running)
         .Subscribe(UpdateUI)
         .AddTo(disposables);
+    }
+
+    // Only for UT
+    public StopWatchModel(IObservable<long> timerObservable, Func<TimeSpan> timeProvider)
+    {
+      timerObservable.Subscribe(_ => ElapsedTime.Value = timeProvider());
     }
 
     public void Record() =>

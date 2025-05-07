@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using Assets.Scripts.Interface;
 using Assets.Scripts.Enum;
+using VContainer;
 
 namespace Assets.Scripts.CountDownTimer
 { 
@@ -17,6 +18,7 @@ namespace Assets.Scripts.CountDownTimer
     private const string finishTimerClip = "timer_finish";
     private float initialDuration = 0f;
 
+    [Inject]
     public TimerModel(IAudioService audioService)
     {
       this.audioService = audioService;
@@ -27,14 +29,14 @@ namespace Assets.Scripts.CountDownTimer
           .AddTo(disposables);
     }
 
-    /*// Only for UT
-    protected TimerModel(IAudioService audioService, IObservable<long> updateObservable)
+    // Only for UT
+    public TimerModel(IAudioService audioService, IObservable<long> updateObservable)
     {
       this.audioService = audioService;
       updateObservable
           .Subscribe(UpdateUI)
           .AddTo(disposables);
-    }*/
+    }
 
     public void ResetTimer()
     {

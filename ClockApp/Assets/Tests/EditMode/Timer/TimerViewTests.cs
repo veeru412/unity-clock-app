@@ -21,70 +21,71 @@ namespace Assets.Tests.EditMode.Timer
     private Button pauseButton;
     private Button resetButton;
 
-    /* [SetUp]
-     public void SetUp()
-     {
-       timerView = new GameObject("TimerView").AddComponent<TimerView>();
-       displayText = new GameObject("DisplayText").AddComponent<TextMeshProUGUI>();
-       startButton = new GameObject("StartButton").AddComponent<Button>();
-       pauseButton = new GameObject("PauseButton").AddComponent<Button>();
-       resetButton = new GameObject("ResetButton").AddComponent<Button>();
+    [SetUp]
+    public void SetUp()
+    {
+      timerView = new GameObject("TimerView").AddComponent<TimerView>();
+      displayText = new GameObject("DisplayText").AddComponent<TextMeshProUGUI>();
+      startButton = new GameObject("StartButton").AddComponent<Button>();
+      pauseButton = new GameObject("PauseButton").AddComponent<Button>();
+      resetButton = new GameObject("ResetButton").AddComponent<Button>();
 
-       SetPrivateField(timerView, "displayText", displayText);
-       SetPrivateField(timerView, "startButton", startButton);
-       SetPrivateField(timerView, "pauseButton", pauseButton);
-       SetPrivateField(timerView, "resetButton", resetButton);
+      SetPrivateField(timerView, "displayText", displayText);
+      SetPrivateField(timerView, "startButton", startButton);
+      SetPrivateField(timerView, "pauseButton", pauseButton);
+      SetPrivateField(timerView, "resetButton", resetButton);
 
-       audioService = new Mock<IAudioService>();
-       timerSubject = new Subject<long>();
+      audioService = new Mock<IAudioService>();
+      timerSubject = new Subject<long>();
 
-       timerModel = new TimerModelExtention(audioService.Object, timerSubject);
+      timerModel = new TimerModel(audioService.Object, timerSubject);
 
-       timerView.Construct(timerModel);
-     }
+      timerView.Construct(timerModel);
+    }
 
-     private void SetPrivateField(object target, string fieldName, object value)
-     {
-       var field = target.GetType().GetField(fieldName, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-       field?.SetValue(target, value);
-     }
+    private void SetPrivateField(object target, string fieldName, object value)
+    {
+      var field = target.GetType().GetField(fieldName, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+      field?.SetValue(target, value);
+    }
 
-     [Test]
-     public void UpdateUITest()
-     {
-       // Arrange
-       timerModel.SetDuration(10f);
-       timerModel.Start();
+    [Test]
+    public void UpdateUITest()
+    {
+      // Arrange
+      timerModel.SetDuration(10f);
+      timerModel.Start();
 
-       // Act
-       timerSubject.OnNext(0);
+      // Act
+      timerSubject.OnNext(0);
 
-       // Assert
-       Assert.AreEqual("00:09", displayText.text);
-     }
+      // Assert
+      Assert.AreEqual("00:09", displayText.text);
+    }
 
-     [Test]
-     public void PlaySFXWhenTimerZeroTest()
-     {
-       // Arrange
-       timerModel.SetDuration(1f);
-       timerModel.Start();
+    [Test]
+    public void PlaySFXWhenTimerZeroTest()
+    {
+      // Arrange
+      timerModel.SetDuration(1f);
+      timerModel.Start();
 
-       // Act
-       timerSubject.OnNext(0);
+      // Act
+      timerSubject.OnNext(0);
 
-       // Assert
-       Assert.AreEqual("00:00", displayText.text);
-       audioService.Verify(a => a.PlaySound("timer_finish"), Times.Once);
-     }
-   }
+      // Assert
+      Assert.AreEqual("00:00", displayText.text);
+      audioService.Verify(a => a.PlaySound("timer_finish"), Times.Once);
+    }
 
-   public class TimerModelExtention : TimerModel
-   {
-     public TimerModelExtention(IAudioService audioService, IObservable<long> updateObservable) : base(audioService, updateObservable)
-     {
-     }
-   }
-    */
+    [TearDown]
+    public void TearDown()
+    {
+      GameObject.DestroyImmediate(timerView.gameObject);
+      GameObject.DestroyImmediate(displayText.gameObject);
+      GameObject.DestroyImmediate(startButton.gameObject);
+      GameObject.DestroyImmediate(pauseButton.gameObject);
+      GameObject.DestroyImmediate(resetButton.gameObject);
+    }
   }
-  }
+}
