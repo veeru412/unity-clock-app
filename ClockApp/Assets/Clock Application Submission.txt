@@ -1,0 +1,25 @@
+# Clock Application Submission
+
+## Future Improvements Document
+
+### 1. iOS/iPad UI Concerns
+- Existing Implementation can work for iOS too but in portrait mode only.
+- Adaptive UI for portrait/landscape. In order to support portrait and landscape both we need support from UX designer to visualize how the clock can be seen in both modes. based on it UI may change. 
+
+### 2. Nice To have
+- UX should be improved. I like to see analog timer.
+- I didn't add much helper or extension classes. it would be nice to have some extension classes. like GameObjectExtension.
+- Theme the UI.
+
+### 3. VR Considerations (Optional)
+- Replace buttons with gaze/controller interactables.  
+- 3D Canvas with depth; avoid HUD elements causing motion sickness.  
+- Batch UI updates to maintain 90FPS.  
+
+## Development Time Estimate
+- Planning: 1 hour  
+- Core Implementation: 4 hours  
+- Edit and Play mode Tests Implementation : 6 hours (Could able write tests quickly. But to add Moq dll and castle core dlls tooks time. I got conflict and build issues with these two dlls)
+- Testing: 2 hours  
+- Polish: 1 hours  
+- Total: ~14 hours  
